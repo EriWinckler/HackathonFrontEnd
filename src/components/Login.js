@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function Login() {
   const [emailPart1, setEmailPart1] = useState("");
@@ -16,6 +17,9 @@ function Login() {
     const email = setEmail();
   };
 
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   return (
     <div>
       <section id="login">
@@ -24,60 +28,57 @@ function Login() {
           alt="Hackaton"
           className="loginLogo"
         />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="loginContainer">
+            <h1>Sign in</h1>
+            <form>
+              <h5>Department</h5>
+              <select {...register("department")}>
+                <option value="frontend">Front End</option>
+                <option value="backend">Back End</option>
+              </select>
+              <br />
+              <h5>E-mail</h5>
+              <input
+                value={emailPart1}
+                //onChange={(event) => setEmailPart1(event.target.value)}
+                type="text"
+                placeholder="First Name"
+                //{...register("emailFirstName", { required: true })}
+              />
+              .
+              <input
+                value={emailPart2}
+                onChange={(event) => setEmailPart2(event.target.value)}
+                type="text"
+                placeholder="Last Name"
+                {...register("emailLastName", { required: true })}
+              />
+              @company.com
+              <h5>Password</h5>
+              <input
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                type="password"
+                {...register("password", { required: true })}
+              />
+              <button
+                onClick={login}
+                type="submit"
+                className="loginSignInButton"
+              >
+                Sign In
+              </button>
+            </form>
 
-        <div className="loginContainer">
-          <h1>Sign in</h1>
-          <form>
-            <h5>Department</h5>
-            <input
-              type="radio"
-              name="department"
-              value="frontend"
-              id="frontend"
-              required
-            />
-            <label for="frontend">Front End</label>
-            <input
-              type="radio"
-              name="department"
-              value="backend"
-              id="backend"
-            />
-            <label for="backend">Back End</label>
-            <br />
-            <h5>E-mail</h5>
-            <input
-              value={emailPart1}
-              onChange={(event) => setEmailPart1(event.target.value)}
-              type="text"
-              placeholder="First Name"
-            />
-            .
-            <input
-              value={emailPart2}
-              onChange={(event) => setEmailPart2(event.target.value)}
-              type="text"
-              placeholder="Last Name"
-            />
-            @company.com
-            <h5>Password</h5>
-            <input
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              type="password"
-            />
-            <button onClick={login} type="submit" className="loginSignInButton">
-              Sign In
-            </button>
-          </form>
+            <p>
+              By signing-in you agree to Hackathons's Conditions of Use & Sale.
+              Please see our Privacy Notice.
+            </p>
 
-          <p>
-            By signing-in you agree to Hackathons's Conditions of Use & Sale.
-            Please see our Privacy Notice.
-          </p>
-
-          <button className="loginRegisterButton">Create Account</button>
-        </div>
+            <button className="loginRegisterButton">Create Account</button>
+          </div>
+        </form>
       </section>
     </div>
   );

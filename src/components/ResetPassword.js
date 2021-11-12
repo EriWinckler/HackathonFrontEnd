@@ -1,29 +1,47 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 
 function ResetPassword() {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   //add logic to passwords
   return (
     <section id="resetPassword">
       <h5>Reset Password</h5>
 
-      <h4>Please enter old password:</h4>
-      <label for="backend">Old Password</label>
-      <input type="text" placeholder="Old Password" />
+      <form>
+        <h4>Please enter old password:</h4>
+        <label for="oldPassword">Old Password </label>
+        <input
+          type="text"
+          placeholder="Old Password"
+          {...register("oldPassword", { required: true })}
+        />
 
-      <br />
-      <br />
+        <br />
+        <br />
 
-      <label for="backend">New Password</label>
-      <input type="text" placeholder="New Password" />
+        <label for="newPassword">New Password </label>
+        <input
+          type="text"
+          placeholder="New Password"
+          {...register("newPassword", { required: true })}
+        />
 
-      <br />
+        <br />
 
-      <label for="backend">Re-enter New Password</label>
-      <input type="text" placeholder="New Password" />
+        <label for="reEnterNewPassword">Re-enter New Password </label>
+        <input
+          type="text"
+          placeholder="Re Enter New Password"
+          {...register("reEnterNewPassword", { required: true })}
+        />
 
-      <br />
+        <br />
 
-      <button type="submit">Submit</button>
+        <button type="submit">Submit</button>
+      </form>
     </section>
   );
 }

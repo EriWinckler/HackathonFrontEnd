@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 //department
 //status
@@ -10,6 +11,17 @@ function Form() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/", register)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <section id="form">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,8 +68,8 @@ function Form() {
           <label for="content">Content</label>
         </h5>
         <textarea
-          id="w3review"
-          name="w3review"
+          id="content"
+          name="content"
           rows="4"
           cols="50"
           {...register("content", { required: true })}
@@ -65,7 +77,7 @@ function Form() {
           Please specify the issue.
         </textarea>
         <br />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" onClick={handleSubmit} />
       </form>
     </section>
   );

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+
+const baseURL = "http://localhost:8080/";
 
 function Login() {
   const [emailPart1, setEmailPart1] = useState("");
@@ -20,12 +23,22 @@ function Login() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
 
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      setPost(response.data);
+    });
+  }, []);
+
+  if (!post) return null;
+
   return (
     <div>
       <section id="login">
         <img
           src="https://i.imgur.com/6iC52wB.png"
-          alt="Hackaton"
+          alt="Hackathon"
           className="loginLogo"
         />
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -41,10 +54,10 @@ function Login() {
               <h5>E-mail</h5>
               <input
                 value={emailPart1}
-                //onChange={(event) => setEmailPart1(event.target.value)}
+                onChange={(event) => setEmailPart1(event.target.value)}
                 type="text"
                 placeholder="First Name"
-                //{...register("emailFirstName", { required: true })}
+                {...register("emailFirstName", { required: true })}
               />
               .
               <input
